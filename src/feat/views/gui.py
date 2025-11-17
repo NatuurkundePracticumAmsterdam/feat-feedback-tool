@@ -412,7 +412,7 @@ class UserInterface(QtWidgets.QMainWindow):
                             )
 
         # add UUID text field
-        self.read_only.append("Bekijk je achievements op de site!" + "\r" + "[placeholder site]"
+        self.read_only.append("Bekijk je achievements op de site:" + "\r" + "http://apps.natuurkundepracticum.nl/ecpc/achievements"
                               + "\r" + "door in te loggen met je unieke code:\r"
                               + self.feat_total["students"][current_student]["UUID"]+ "\r")
 
