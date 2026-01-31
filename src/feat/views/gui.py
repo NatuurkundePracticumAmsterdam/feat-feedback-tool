@@ -3,7 +3,7 @@ import textwrap
 from importlib import resources
 
 from PyQt6 import QtWidgets, uic
-from PyQt6.QtGui import QFont, QIcon, QMovie, QGuiApplication
+from PyQt6.QtGui import QFont, QGuiApplication, QIcon, QMovie
 
 from feat.models.configuration import configuration
 
@@ -11,6 +11,10 @@ FONT_STYLE_BUTTONS = QFont("Menlo", 13, weight=QFont.Weight.Bold)
 FONT_STYLE_BUTTONS.setStyleHint(QFont.StyleHint.Monospace)
 FONT_STYLE_TEXT = QFont("Menlo", 13)
 FONT_STYLE_TEXT.setStyleHint(QFont.StyleHint.Monospace)
+
+STYLE_POSITIVE = "color: rgb(34, 139, 34)"
+STYLE_SUGGESTION = "color: rgb(255, 172, 28)"
+STYLE_NEGATIVE = "color: rgb(210, 43, 43)"
 
 class NewFileWindow(QtWidgets.QDialog):
     """
@@ -268,6 +272,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
                 self.button["check"][head][line] = QtWidgets.QCheckBox(combine_text)
                 self.button["check"][head][line].setFont(FONT_STYLE_TEXT)
+                self.button["check"][head][line].setStyleSheet(STYLE_POSITIVE)
                 self.vbox.addWidget(self.button["check"][head][line])
 
         # add greeting text field
