@@ -19,7 +19,17 @@ class CheckboxSheet(Enum):
             return cls.STYLE_DEFAULT
 
 
-def extract_feedback_stylesheet(feedback_text: str) -> tuple[str, str]:
+def extract_feedback_stylesheet(feedback_text: str) -> tuple[str | None, str]:
+    """Extracts stylesheet for the checkbox of the feedback point corresponding to the positivity
+    of the point and removes the encoding symbol from the text (if present).
+
+    Args:
+        feedback_text (str): feedback text with symbol encoding positivity of feedback point
+
+    Returns:
+        tuple[str|None,str]: stylesheet for textbox with correct colour (None if not present),
+                             updated feedback_text with encoding symbol removed (if present)
+    """
     symbol = feedback_text[0]
     stylesheet = CheckboxSheet.from_symbol(symbol).value
 
