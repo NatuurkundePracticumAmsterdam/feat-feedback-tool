@@ -413,9 +413,12 @@ class UserInterface(QtWidgets.QMainWindow):
             if head != "Achievements":
                 for line in self.button["check"][head]:
                     if self.button["check"][head][line].isChecked():
+                        _, feedback_text = extract_feedback_stylesheet(
+                            self.feat_total["feedbackform"][head][line]
+                        )
                         self.read_only.append(
-                            self.feat_total["feedbackform"][head][line] + "\r"
-                            )
+                            feedback_text + "\r"
+                        )
 
         # add UUID text field
         self.read_only.append("Bekijk je achievements op de site:" + "\r" + "http://apps.natuurkundepracticum.nl/ecpc/achievements"
