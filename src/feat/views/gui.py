@@ -3,8 +3,9 @@ import textwrap
 from importlib import resources
 
 from PyQt6 import QtWidgets, uic
-from PyQt6.QtGui import QFont, QIcon, QMovie, QGuiApplication
+from PyQt6.QtGui import QFont, QGuiApplication, QIcon, QMovie
 
+from feat.models.colourful_feat import extract_feedback_stylesheet
 from feat.models.configuration import configuration
 
 FONT_STYLE_BUTTONS = QFont("Menlo", 13, weight=QFont.Weight.Bold)
@@ -263,11 +264,16 @@ class UserInterface(QtWidgets.QMainWindow):
             for line in self.fblines[head]:
                 # manualy create multiline feedback lines
                 text = self.fblines[head][line]
+                stylesheet, text = extract_feedback_stylesheet(text)
+
                 split_text = textwrap.wrap(text, width=65)
                 combine_text = "\n".join(split_text)
 
                 self.button["check"][head][line] = QtWidgets.QCheckBox(combine_text)
                 self.button["check"][head][line].setFont(FONT_STYLE_TEXT)
+                if stylesheet is not None:
+                    self.button["check"][head][line].setStyleSheet(stylesheet)
+
                 self.vbox.addWidget(self.button["check"][head][line])
 
         # add greeting text field
@@ -407,9 +413,12 @@ class UserInterface(QtWidgets.QMainWindow):
             if head != "Achievements":
                 for line in self.button["check"][head]:
                     if self.button["check"][head][line].isChecked():
+                        _, feedback_text = extract_feedback_stylesheet(
+                            self.feat_total["feedbackform"][head][line]
+                        )
                         self.read_only.append(
-                            self.feat_total["feedbackform"][head][line] + "\r"
-                            )
+                            feedback_text + "\r"
+                        )
 
         # add UUID text field
         self.read_only.append("Bekijk je achievements op de site:" + "\r" + "http://apps.natuurkundepracticum.nl/ecpc/achievements"
